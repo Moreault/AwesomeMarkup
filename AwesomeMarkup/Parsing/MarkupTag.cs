@@ -1,0 +1,28 @@
+﻿namespace ToolBX.AwesomeMarkup.Parsing;
+
+public record MarkupTag
+{
+    public string Name { get; init; } = string.Empty;
+    public string Value { get; init; } = string.Empty;
+    public IReadOnlyList<MarkupParameter> Attributes { get; init; } = Array.Empty<MarkupParameter>();
+
+    public virtual bool Equals(MarkupTag? other)
+    {
+        if (ReferenceEquals(null, other)) return false;
+        if (ReferenceEquals(this, other)) return true;
+        return (string.IsNullOrWhiteSpace(Name) && string.IsNullOrWhiteSpace(other.Name) || string.Equals(Name, other.Name, StringComparison.InvariantCultureIgnoreCase)) &&
+               (string.IsNullOrWhiteSpace(Value) && string.IsNullOrWhiteSpace(other.Value) || string.Equals(Value, other.Value, StringComparison.InvariantCultureIgnoreCase)) &&
+               Attributes.SequenceEqual(other.Attributes);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Name, Value, Attributes);
+    }
+
+    public override string ToString()
+    {
+        var namePart = string.IsNullOrWhiteSpace(Value) ? Name : $"{Name}={Value}";
+        return !Attributes.Any() ? namePart : $"{namePart} {string.Join(' ', Attributes)}";
+    }
+}
