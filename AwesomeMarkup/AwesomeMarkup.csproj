@@ -15,9 +15,14 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Description>Extracts any kind of markup information from a string of characters.</Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>awesomemarkup.png</PackageIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Include="..\awesomemarkup.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	  <None Include="..\README.md">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
