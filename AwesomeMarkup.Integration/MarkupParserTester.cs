@@ -8,6 +8,22 @@ public class MarkupParserTest
     [TestClass]
     public class Parse : IntegrationTester<MarkupParser>
     {
+        //TODO Fix this case (it's probably because of <Main> somewhere towards the end)
+        //TODO Or throw something better than null/sequence contains no element or something
+        [TestMethod]
+        [Ignore]
+        public void WhenStackTrace_DoNotThrow()
+        {
+            //Arrange
+            var value = "   at ToolBX.AwesomeMarkup.Conversion.MarkupParameterConverter.Convert(String value, MarkupLanguageSpecifications specifications)\r\n   at ToolBX.AwesomeMarkup.Conversion.MarkupTagConverter.Convert(String value, MarkupLanguageSpecifications specifications)\r\n   at ToolBX.AwesomeMarkup.Conversion.MarkupExtractor.Extract(String value, MarkupLanguageSpecifications specifications)\r\n   at ToolBX.AwesomeMarkup.Parsing.MarkupParser.Parse(String value, MarkupLanguageSpecifications specifications)\r\n   at ToolBX.DML.NET.DmlSerializer.Deserialize(String text)\r\n   at ToolBX.MisterTerminal.DmlAnsiConverter.Convert(String text)\r\n   at ToolBX.MisterTerminal.TerminalWriter.WriteWithoutBreakingLine(String text, Object[] args)\r\n   at ToolBX.MisterTerminal.TerminalWriter.Write(String text, Object[] args)\r\n   at RoughConverter.Startup.Run(IServiceProvider serviceProvider) in C:\\Users\\seran\\source\\repos\\RoughConverter\\RoughConverter\\Startup.cs:line 46\r\n   at ToolBX.AssemblyInitializer.Console.ConsoleHost.UseStartup[T]()\r\n   at Program.<Main>$(String[] args) in C:\\Users\\seran\\source\\repos\\RoughConverter\\RoughConverter\\Program.cs:line 1";
+
+            //Act
+            var result = Instance.Parse(value);
+
+            //Assert
+        }
+
+
         [TestMethod]
         public void XmlWithoutProcessingTags()
         {
