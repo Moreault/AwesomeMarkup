@@ -1,4 +1,6 @@
-﻿namespace ToolBX.AwesomeMarkup.Conversion;
+﻿using ToolBX.AwesomeMarkup.Resources;
+
+namespace ToolBX.AwesomeMarkup.Conversion;
 
 public interface IMarkupTagLinker
 {
@@ -20,7 +22,8 @@ public class MarkupTagLinker : IMarkupTagLinker
         {
             var openingTag = tempList.Last(x => !x.IsClosing);
 
-            var closingTag = tempList.First(x => x.IsClosing && x.StartIndex > openingTag.EndIndex && string.Equals(x.Tag.Name, $"/{openingTag.Tag.Name}", StringComparison.InvariantCultureIgnoreCase));
+            var closingTag = tempList.FirstOrDefault(x => x.IsClosing && x.StartIndex > openingTag.EndIndex && string.Equals(x.Tag.Name, $"/{openingTag.Tag.Name}", StringComparison.InvariantCultureIgnoreCase));
+            if (closingTag == null) throw new ArgumentException(string.Format(Exceptions.OpeningTagWithoutClosingTag, openingTag.Tag.Name));
 
             linked.Add(new LinkedTag(openingTag, closingTag));
 

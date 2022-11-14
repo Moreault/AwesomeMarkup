@@ -2,7 +2,7 @@
 
 public record MarkupTagInfo
 {
-    public MarkupTag Tag { get; init; }
+    public required MarkupTag Tag { get; init; }
     public int StartIndex { get; init; }
     public int EndIndex { get; init; }
     public bool IsClosing => Tag.Name.Contains('/');

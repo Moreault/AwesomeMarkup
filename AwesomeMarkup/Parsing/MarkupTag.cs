@@ -2,7 +2,17 @@
 
 public record MarkupTag
 {
-    public string Name { get; init; } = string.Empty;
+    public required string Name
+    {
+        get => _name;
+        init
+        {
+            if (string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException(nameof(value));
+            _name = value;
+        }
+    }
+    private readonly string _name = null!;
+
     public string Value { get; init; } = string.Empty;
     public IReadOnlyList<MarkupParameter> Attributes { get; init; } = Array.Empty<MarkupParameter>();
 
