@@ -1,4 +1,7 @@
-﻿namespace ToolBX.AwesomeMarkup.Conversion;
+﻿using ToolBX.AwesomeMarkup.Resources;
+using ToolBX.Collections.ReadOnly;
+
+namespace ToolBX.AwesomeMarkup.Conversion;
 
 public interface IMarkupTagConverter
 {
@@ -21,17 +24,34 @@ public class MarkupTagConverter : IMarkupTagConverter
         if (specifications == null) throw new ArgumentNullException(nameof(specifications));
         value = value.Trim(specifications.Brackets.Opening, specifications.Brackets.Closing);
 
-        var parameters = _markupParameterConverter.Convert(value, specifications).ToList();
-        if (!parameters.Any()) throw new Exception($"Can't convert string to {nameof(MarkupTag)} : '{value}' does not contain any valid parameters.");
+        var startsWithProcessingCharacter = value.StartsWith('?');
+        var endsWithProcessingCharacter = value.EndsWith('?');
+        var startsWithClosingSlash = !startsWithProcessingCharacter && value.StartsWith('/');
+        var endsWithClosingSlash = !endsWithProcessingCharacter && value.EndsWith('/');
+
+        var kind  = TagKind.Opening;
+        if (startsWithClosingSlash && endsWithClosingSlash)
+            throw new MarkupParsingException(Exceptions.ContainsSelfClosingAndClosingSlashes);
+        if (startsWithClosingSlash)
+            kind = TagKind.Closing;
+        else if (endsWithClosingSlash)
+            kind = TagKind.SelfClosing;
+        else if (startsWithProcessingCharacter && endsWithProcessingCharacter)
+            kind = TagKind.Processing;
+
+        value = value.Trim('/', '?');
+
+        var parameters = _markupParameterConverter.Convert(value, specifications);
+        if (!parameters.Any()) throw new MarkupParsingException(string.Format(Exceptions.StringDoesNotContainValidParameters, value));
 
         var tagParameters = parameters.First();
-        parameters.RemoveAt(0);
 
         return new MarkupTag
         {
             Name = tagParameters.Name,
             Value = tagParameters.Value,
-            Attributes = parameters
+            Attributes = parameters.WithoutAt(0),
+            Kind = kind
         };
     }
 }

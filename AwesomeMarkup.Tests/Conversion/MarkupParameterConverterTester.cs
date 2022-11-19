@@ -1,4 +1,6 @@
-﻿namespace ToolBX.AwesomeMarkup.Tests.Conversion;
+﻿using ToolBX.AwesomeMarkup.Resources;
+
+namespace ToolBX.AwesomeMarkup.Tests.Conversion;
 
 [TestClass]
 public class MarkupParameterConverterTester
@@ -45,7 +47,7 @@ public class MarkupParameterConverterTester
             Action action = () => Instance.Convert(value, new MarkupLanguageSpecifications());
 
             //Assert
-            action.Should().Throw<Exception>().WithMessage($"Can't convert string to {nameof(MarkupParameter)} : 'IsEnabled=true=probably' in '{value}' has too many '=' signs.");
+            action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.TooManyAssignationSymbols, "IsEnabled=true=probably", value, "=")}");
         }
 
         [TestMethod]

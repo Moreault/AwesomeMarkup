@@ -118,6 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="OpeningTagWithoutClosingTag" xml:space="preserve">
-    <value>Can't parse string : Could not find a closing tag for '{0}'</value>
+	  <value>Could not find a closing tag for '{0}'</value>
+  </data>
+  <data name="CannotParseString" xml:space="preserve">
+	  <value>Can't parse string</value>
+  </data>
+  <data name="ContainsSelfClosingAndClosingSlashes" xml:space="preserve">
+	  <value>Tags with both opening and closing slashes are not supported</value>
+  </data>
+  <data name="StringDoesNotContainValidParameters" xml:space="preserve">
+	  <value>'{0}' does not contain any valid parameters</value>
+  </data>
+  <data name="TooManyAssignationSymbols" xml:space="preserve">
+	  <value>'{0} in '{1}' has too many '{2}' symbols</value>
   </data>
 </root>

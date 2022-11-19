@@ -31,6 +31,7 @@ public class MarkupExtractor : IMarkupExtractor
             var startIndex = openingBrackets[i];
             var endIndex = closingBrackets[i];
 
+
             tagInfo.Add(new MarkupTagInfo
             {
                 StartIndex = startIndex,

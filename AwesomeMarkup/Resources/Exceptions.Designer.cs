@@ -61,11 +61,47 @@ namespace ToolBX.AwesomeMarkup.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can&apos;t parse string : Could not find a closing tag for &apos;{0}&apos;.
+        ///   Looks up a localized string similar to Can&apos;t parse string.
+        /// </summary>
+        internal static string CannotParseString {
+            get {
+                return ResourceManager.GetString("CannotParseString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags with both opening and closing slashes are not supported.
+        /// </summary>
+        internal static string ContainsSelfClosingAndClosingSlashes {
+            get {
+                return ResourceManager.GetString("ContainsSelfClosingAndClosingSlashes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not find a closing tag for &apos;{0}&apos;.
         /// </summary>
         internal static string OpeningTagWithoutClosingTag {
             get {
                 return ResourceManager.GetString("OpeningTagWithoutClosingTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; does not contain any valid parameters.
+        /// </summary>
+        internal static string StringDoesNotContainValidParameters {
+            get {
+                return ResourceManager.GetString("StringDoesNotContainValidParameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string TooManyAssignationSymbols {
+            get {
+                return ResourceManager.GetString("TooManyAssignationSymbols", resourceCulture);
             }
         }
     }

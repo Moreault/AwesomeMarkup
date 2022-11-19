@@ -16,18 +16,21 @@ public record MarkupTag
     public string Value { get; init; } = string.Empty;
     public IReadOnlyList<MarkupParameter> Attributes { get; init; } = Array.Empty<MarkupParameter>();
 
+    public required TagKind Kind { get; init; }
+
     public virtual bool Equals(MarkupTag? other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
         return (string.IsNullOrWhiteSpace(Name) && string.IsNullOrWhiteSpace(other.Name) || string.Equals(Name, other.Name, StringComparison.InvariantCultureIgnoreCase)) &&
                (string.IsNullOrWhiteSpace(Value) && string.IsNullOrWhiteSpace(other.Value) || string.Equals(Value, other.Value, StringComparison.InvariantCultureIgnoreCase)) &&
-               Attributes.SequenceEqual(other.Attributes);
+               Attributes.SequenceEqual(other.Attributes) &&
+               Kind == other.Kind;
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Name, Value, Attributes);
+        return HashCode.Combine(Name, Value, Attributes, Kind);
     }
 
     public override string ToString()

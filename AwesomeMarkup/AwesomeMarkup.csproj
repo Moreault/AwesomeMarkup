@@ -31,6 +31,8 @@
 
 	<ItemGroup>
 	  <PackageReference Include="ToolBX.AutoInject" Version="2.0.0" />
+	  <PackageReference Include="ToolBX.Collections.ReadOnly" Version="2.0.0" />
+	  <PackageReference Include="ToolBX.SmartyStrings" Version="2.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

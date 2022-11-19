@@ -37,7 +37,9 @@ public class MarkupParser : IMarkupParser
             if (value[currentIndex] == specifications.Brackets.Opening)
             {
                 var currentLink = linkedTags.Single(x => x.StartIndex == currentIndex);
-                var nestedMetaStrings = Parse(value.Substring(currentLink.Opening.EndIndex + 1, currentLink.Closing.StartIndex - currentLink.Opening.EndIndex - 1));
+                var nestedMetaStrings = currentLink.Opening == currentLink.Closing ? 
+                    Array.Empty<MetaString>() : 
+                    Parse(value.Substring(currentLink.Opening.EndIndex + 1, currentLink.Closing.StartIndex - currentLink.Opening.EndIndex - 1));
 
                 currentIndex = currentLink.EndIndex + 1;
 
@@ -68,6 +70,11 @@ public class MarkupParser : IMarkupParser
                         metaStrings.AddRange(otherStrings);
                     }
                 }
+                else
+                    metaStrings.Add(new MetaString
+                    {
+                        Tags = new List<MarkupTag> { currentLink.Opening.Tag }
+                    });
 
             }
             else

@@ -1,4 +1,6 @@
-﻿namespace ToolBX.AwesomeMarkup.Tests.Conversion;
+﻿using ToolBX.AwesomeMarkup.Resources;
+
+namespace ToolBX.AwesomeMarkup.Tests.Conversion;
 
 public class MarkupTagConverterTestBase : Tester<MarkupTagConverter>
 {
@@ -61,7 +63,8 @@ public class MarkupTagConverterTester
             {
                 Name = tagParameters.Name,
                 Value = tagParameters.Value,
-                Attributes = otherParameters
+                Attributes = otherParameters,
+                Kind = TagKind.Opening
             });
         }
 
@@ -82,6 +85,7 @@ public class MarkupTagConverterTester
             {
                 Name = tagParameters.Name,
                 Value = tagParameters.Value,
+                Kind = TagKind.Opening
             });
         }
 
@@ -97,7 +101,7 @@ public class MarkupTagConverterTester
             Action action = () => Instance.Convert(value, new MarkupLanguageSpecifications());
 
             //Assert
-            action.Should().Throw<Exception>().WithMessage($"Can't convert string to {nameof(MarkupTag)} : '{value}' does not contain any valid parameters.");
+            action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.StringDoesNotContainValidParameters, value)}");
         }
     }
 }

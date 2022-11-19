@@ -19,8 +19,8 @@ public record MetaString
 
     public override string ToString()
     {
-        if (string.IsNullOrWhiteSpace(Text) && Tags.Any()) return "(Empty)";
-        if (string.IsNullOrWhiteSpace(Text) && !Tags.Any()) return $"Tags {string.Join(", ", Tags.Select(x => $"<{x}>"))}";
+        if (string.IsNullOrWhiteSpace(Text) && !Tags.Any()) return "(Empty)";
+        if (string.IsNullOrWhiteSpace(Text) && Tags.Any()) return $"Tags {string.Join(", ", Tags.Select(x => $"<{x}>"))}";
         if (Tags.Any()) return $"'{Text}' with tags {string.Join(", ", Tags.Select(x => $"<{x}>"))}";
         return $"'{Text}'";
     }

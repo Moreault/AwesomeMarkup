@@ -7,4 +7,9 @@ public record LinkedTag(MarkupTagInfo Opening, MarkupTagInfo Closing)
 
     public int StartIndex => Opening.StartIndex;
     public int EndIndex => Closing.EndIndex;
+
+    public LinkedTag(MarkupTagInfo opening) : this(opening, opening)
+    {
+
+    }
 }

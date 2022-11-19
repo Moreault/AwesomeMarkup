@@ -20,15 +20,17 @@ public class MarkupTagLinker : IMarkupTagLinker
 
         while (tempList.Any())
         {
-            var openingTag = tempList.Last(x => !x.IsClosing);
+            var openingTag = tempList.Last(x => x.Kind is TagKind.Opening or TagKind.SelfClosing or TagKind.Processing);
 
-            var closingTag = tempList.FirstOrDefault(x => x.IsClosing && x.StartIndex > openingTag.EndIndex && string.Equals(x.Tag.Name, $"/{openingTag.Tag.Name}", StringComparison.InvariantCultureIgnoreCase));
-            if (closingTag == null) throw new ArgumentException(string.Format(Exceptions.OpeningTagWithoutClosingTag, openingTag.Tag.Name));
+            var closingTag = tempList.FirstOrDefault(x => x.Kind is TagKind.Closing && x.StartIndex > openingTag.EndIndex && string.Equals(x.Tag.Name, openingTag.Tag.Name, StringComparison.InvariantCultureIgnoreCase));
+            if (closingTag == null && !openingTag.IsClosing) throw new MarkupParsingException(string.Format(Exceptions.OpeningTagWithoutClosingTag, openingTag.Tag.Name));
 
-            linked.Add(new LinkedTag(openingTag, closingTag));
+            linked.Add(closingTag == null ? new LinkedTag(openingTag) : new LinkedTag(openingTag, closingTag));
 
             tempList.Remove(openingTag);
-            tempList.Remove(closingTag);
+
+            if (closingTag != null)
+                tempList.Remove(closingTag);
         }
 
         return linked.OrderBy(x => x.Opening.StartIndex).ToList();

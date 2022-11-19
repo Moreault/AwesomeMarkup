@@ -1,4 +1,6 @@
-﻿namespace ToolBX.AwesomeMarkup.Conversion;
+﻿using ToolBX.AwesomeMarkup.Resources;
+
+namespace ToolBX.AwesomeMarkup.Conversion;
 
 public interface IMarkupParameterConverter
 {
@@ -19,7 +21,7 @@ public class MarkupParameterConverter : IMarkupParameterConverter
         foreach (var word in words)
         {
             var nameAndValue = word.Split(specifications.Attributes.AssignationSeparator);
-            if (nameAndValue.Length > 2) throw new Exception($"Can't convert string to {nameof(MarkupParameter)} : '{word}' in '{value}' has too many '{specifications.Attributes.AssignationSeparator}' signs.");
+            if (nameAndValue.Length > 2) throw new MarkupParsingException(string.Format(Exceptions.TooManyAssignationSymbols, word, value, specifications.Attributes.AssignationSeparator));
             var parameterName = nameAndValue.First();
             var parameterValue = nameAndValue.Length == 1 ? string.Empty : nameAndValue[1].Trim('\"', '\'');
 

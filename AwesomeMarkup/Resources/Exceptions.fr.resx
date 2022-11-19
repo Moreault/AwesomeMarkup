@@ -99,6 +99,18 @@
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
 	<data name="OpeningTagWithoutClosingTag" xml:space="preserve">
-		<value>Impossible d'analyser la chaîne de caractères : Balise de fin introuvable pour '{0}'</value>
+		<value>Balise de fin introuvable pour '{0}'</value>
+	</data>
+	<data name="CannotParseString" xml:space="preserve">
+		<value>Impossible d'analyser la chaîne de caractères</value>
+	</data>
+	<data name="ContainsSelfClosingAndClosingSlashes" xml:space="preserve">
+		<value>Les balises avec des '/' au début et à la fin ne sont pas supportés</value>
+	</data>
+	<data name="StringDoesNotContainValidParameters" xml:space="preserve">
+		<value>'{0}' ne contient aucun paramètre valide</value>
+	</data>
+	<data name="TooManyAssignationSymbols" xml:space="preserve">
+		<value>La partie '{0} dans '{1}' a trop de symboles '{2}'</value>
 	</data>
 </root>

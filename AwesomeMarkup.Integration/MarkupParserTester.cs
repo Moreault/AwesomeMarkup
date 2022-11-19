@@ -36,78 +36,82 @@ public class MarkupParserTest
             //Assert
             result.Should().BeEquivalentTo(new List<MetaString>
             {
-                new MetaString
+                new()
                 {
                     Text = "test string "
                 },
-                new MetaString
+                new()
                 {
                     Text = "je suis rouge",
                     Tags = new List<MarkupTag>
                     {
-                        new MarkupTag
+                        new()
                         {
                             Name = "markup",
                             Attributes = new List<MarkupParameter>
                             {
-                                new MarkupParameter
+                                new()
                                 {
                                     Name = "schema"
                                 },
-                                new MarkupParameter
+                                new()
                                 {
                                     Name = "xmlns:xs",
                                     Value = "http://www.wjs.cum/markupSchema/"
                                 },
-                                new MarkupParameter
+                                new()
                                 {
                                     Name = "version",
                                     Value = "1.0"
                                 }
-                            }
+                            },
+                            Kind = TagKind.Opening
                         },
-                        new MarkupTag
+                        new()
                         {
                             Name = "text",
                             Attributes = new List<MarkupParameter>
                             {
-                                new MarkupParameter
+                                new()
                                 {
                                     Name = "is-text",
                                     Value = "true"
                                 }
                             },
+                            Kind = TagKind.Opening
 
                         },
-                        new MarkupTag
+                        new()
                         {
-                            Name = "div"
+                            Name = "div",
+                            Kind = TagKind.Opening
                         },
-                        new MarkupTag
+                        new()
                         {
                             Name = "span",
                             Attributes = new List<MarkupParameter>
                             {
-                                new MarkupParameter
+                                new()
                                 {
                                     Name = "r",
                                     Value = "255"
                                 },
-                                new MarkupParameter
+                                new()
                                 {
                                     Name = "g",
                                     Value = "0"
                                 },
-                                new MarkupParameter
+                                new()
                                 {
                                     Name = "b",
                                     Value = "0"
                                 },
-                            }
+                            },
+                            Kind = TagKind.Opening
                         },
                     }
                 },
-                new MetaString
+                new()
                 {
                     Text = " je ne suis plus rouge"
                 }});
@@ -125,27 +129,29 @@ public class MarkupParserTest
             //Assert
             result.Should().BeEquivalentTo(new List<MetaString>
             {
-                new MetaString
+                new()
                 {
                     Text = "The base is located near "
                 },
-                new MetaString
+                new()
                 {
                     Text = "Behabad",
                     Tags = new List<MarkupTag>
                     {
-                        new MarkupTag
+                        new()
                         {
-                            Name = "bold"
+                            Name = "bold",
+                            Kind = TagKind.Opening
                         },
-                        new MarkupTag
+                        new()
                         {
                             Name = "color",
-                            Value = "#252321"
+                            Value = "#252321",
+                            Kind = TagKind.Opening
                         }
                     }
                 },
-                new MetaString
+                new()
                 {
                     Text = "."
                 }
@@ -164,23 +170,24 @@ public class MarkupParserTest
             //Assert
             result.Should().BeEquivalentTo(new List<MetaString>
             {
-                new MetaString
+                new()
                 {
                     Text = "The base is located near "
                 },
-                new MetaString
+                new()
                 {
                     Text = "Behabad",
                     Tags = new List<MarkupTag>
                     {
-                        new MarkupTag
+                        new()
                         {
                             Name = "color",
-                            Value = "#252321"
+                            Value = "#252321",
+                            Kind = TagKind.Opening
                         }
                     }
                 },
-                new MetaString
+                new()
                 {
                     Text = "."
                 }
@@ -199,49 +206,51 @@ public class MarkupParserTest
             //Assert
             result.Should().BeEquivalentTo(new List<MetaString>
             {
-                new MetaString
+                new()
                 {
                     Text = "That \"base\" is on the "
                 },
-                new MetaString
+                new()
                 {
                     Text = "outskirts",
                     Tags = new List<MarkupTag>
                     {
-                        new MarkupTag
+                        new()
                         {
                             Name = "color",
                             Attributes = new List<MarkupParameter>
                             {
-                                new MarkupParameter { Name = "red", Value = "164" },
-                                new MarkupParameter { Name = "green", Value = "139" },
-                                new MarkupParameter { Name = "blue", Value = "55" }
-                            }
+                                new() { Name = "red", Value = "164" },
+                                new() { Name = "green", Value = "139" },
+                                new() { Name = "blue", Value = "55" }
+                            },
+                            Kind = TagKind.Opening
                         }
                     }
                 },
-                new MetaString
+                new()
                 {
                     Text = " of "
                 },
-                new MetaString
+                new()
                 {
                     Text = "Behabad",
                     Tags = new List<MarkupTag>
                     {
-                        new MarkupTag
+                        new()
                         {
                             Name = "color",
                             Attributes = new List<MarkupParameter>
                             {
-                                new MarkupParameter { Name = "red", Value = "56" },
-                                new MarkupParameter { Name = "green", Value = "116" },
-                                new MarkupParameter { Name = "blue", Value = "168" }
-                            }
+                                new() { Name = "red", Value = "56" },
+                                new() { Name = "green", Value = "116" },
+                                new() { Name = "blue", Value = "168" }
+                            },
+                            Kind = TagKind.Opening
                         }
                     }
                 },
-                new MetaString
+                new()
                 {
                     Text = "."
                 }
@@ -260,57 +269,106 @@ public class MarkupParserTest
             //Assert
             result.Should().BeEquivalentTo(new List<MetaString>
             {
-                new MetaString
+                new()
                 {
                     Text = "Double nested",
                     Tags = new List<MarkupTag>
                     {
-                        new MarkupTag
+                        new()
                         {
                             Name = "a",
-                            Value = "1"
+                            Value = "1",
+                            Kind = TagKind.Opening
                         },
-                        new MarkupTag
+                        new()
                         {
                             Name = "a",
-                            Value = "2"
+                            Value = "2",
+                            Kind = TagKind.Opening
                         }
                     }
                 },
-                new MetaString
+                new()
                 {
                     Text = "Unnested",
                     Tags = new List<MarkupTag>
                     {
-                        new MarkupTag
+                        new()
                         {
                             Name = "a",
-                            Value = "3"
+                            Value = "3",
+                            Kind = TagKind.Opening
                         }
                     }
                 }
             });
         }
 
-        //TODO Support "processing" tags (ex : <?version?>)
+        //TODO Test with line breaks and spaces (should not add more meta strings to those)
+
         [TestMethod]
         public void ProcessingTags()
         {
             //Arrange
-            var value = """
-                <?xml version="1.0" encoding="UTF-8"?>
-                <note>
-                  <to>Tove</to>
-                  <from>Jani</from>
-                  <heading>Reminder</heading>
-                  <body>Don't forget me this weekend!</body>
-                </note>
-                """;
+            var value = """<?xml version="1.0" encoding="UTF-8"?><note><to>Tove</to><from>Jani</from><heading>Reminder</heading><body>Don't forget me this weekend!</body></note>""";
 
             //Act
             var result = Instance.Parse(value);
 
             //Assert
+            result.Should().BeEquivalentTo(new List<MetaString>
+            {
+                new()
+                {
+                    Tags = new List<MarkupTag>
+                    {
+                        new()
+                        {
+                            Name = "xml", Kind = TagKind.Processing, Attributes = new List<MarkupParameter>
+                            {
+                                new() { Name="version", Value = "1.0" },
+                                new() { Name="encoding", Value = "UTF-8" }
+                            }
+                        }
+                    }
+                },
+                new()
+                {
+                    Text = "Tove",
+                    Tags = new List<MarkupTag>
+                    {
+                        new() { Name = "note", Kind = TagKind.Opening },
+                        new() { Name = "to", Kind = TagKind.Opening },
+                    }
+                },
+                new()
+                {
+                    Text = "Jani",
+                    Tags = new List<MarkupTag>
+                    {
+                        new() { Name = "note", Kind = TagKind.Opening },
+                        new() { Name = "from", Kind = TagKind.Opening },
+                    }
+                },
+                new()
+                {
+                    Text = "Reminder",
+                    Tags = new List<MarkupTag>
+                    {
+                        new() { Name = "note", Kind = TagKind.Opening },
+                        new() { Name = "heading", Kind = TagKind.Opening },
+                    }
+                },
+                new()
+                {
+                    Text = "Don't forget me this weekend!",
+                    Tags = new List<MarkupTag>
+                    {
+                        new() { Name = "note", Kind = TagKind.Opening },
+                        new() { Name = "body", Kind = TagKind.Opening },
+                    }
+                },
+            });
         }
 
         //TODO Disallow using unescaped tag brackets inside tags
