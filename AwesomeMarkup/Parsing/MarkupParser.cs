@@ -1,4 +1,6 @@
-﻿namespace ToolBX.AwesomeMarkup.Parsing;
+﻿using ToolBX.Collections.ReadOnly;
+
+namespace ToolBX.AwesomeMarkup.Parsing;
 
 public interface IMarkupParser
 {
@@ -89,6 +91,6 @@ public class MarkupParser : IMarkupParser
 
         }
 
-        return metaStrings;
+        return metaStrings.Without(x => string.IsNullOrWhiteSpace(x.Text) && !x.Tags.Any());
     }
 }

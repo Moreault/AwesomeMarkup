@@ -1,4 +1,6 @@
-﻿using ToolBX.Eloquentest.Integration;
+﻿using ToolBX.AwesomeMarkup;
+using ToolBX.AwesomeMarkup.Resources;
+using ToolBX.Eloquentest.Integration;
 
 namespace AwesomeMarkup.Integration;
 
@@ -8,19 +10,17 @@ public class MarkupParserTest
     [TestClass]
     public class Parse : IntegrationTester<MarkupParser>
     {
-        //TODO Fix this case (it's probably because of <Main> somewhere towards the end)
-        //TODO Or throw something better than null/sequence contains no element or something
         [TestMethod]
-        [Ignore]
-        public void WhenStackTrace_DoNotThrow()
+        public void WhenStackTrace_Throw()
         {
             //Arrange
             var value = "   at ToolBX.AwesomeMarkup.Conversion.MarkupParameterConverter.Convert(String value, MarkupLanguageSpecifications specifications)\r\n   at ToolBX.AwesomeMarkup.Conversion.MarkupTagConverter.Convert(String value, MarkupLanguageSpecifications specifications)\r\n   at ToolBX.AwesomeMarkup.Conversion.MarkupExtractor.Extract(String value, MarkupLanguageSpecifications specifications)\r\n   at ToolBX.AwesomeMarkup.Parsing.MarkupParser.Parse(String value, MarkupLanguageSpecifications specifications)\r\n   at ToolBX.DML.NET.DmlSerializer.Deserialize(String text)\r\n   at ToolBX.MisterTerminal.DmlAnsiConverter.Convert(String text)\r\n   at ToolBX.MisterTerminal.TerminalWriter.WriteWithoutBreakingLine(String text, Object[] args)\r\n   at ToolBX.MisterTerminal.TerminalWriter.Write(String text, Object[] args)\r\n   at RoughConverter.Startup.Run(IServiceProvider serviceProvider) in C:\\Users\\seran\\source\\repos\\RoughConverter\\RoughConverter\\Startup.cs:line 46\r\n   at ToolBX.AssemblyInitializer.Console.ConsoleHost.UseStartup[T]()\r\n   at Program.<Main>$(String[] args) in C:\\Users\\seran\\source\\repos\\RoughConverter\\RoughConverter\\Program.cs:line 1";
 
             //Act
-            var result = Instance.Parse(value);
+            var action = () => Instance.Parse(value);
 
             //Assert
+            action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.OpeningTagWithoutClosingTag, "Main")}");
         }
 
 
@@ -304,8 +304,6 @@ public class MarkupParserTest
             });
         }
 
-        //TODO Test with line breaks and spaces (should not add more meta strings to those)
-
         [TestMethod]
         public void ProcessingTags()
         {
@@ -368,6 +366,44 @@ public class MarkupParserTest
                         new() { Name = "body", Kind = TagKind.Opening },
                     }
                 },
+            });
+        }
+
+        [TestMethod]
+        public void LineBreaksAndSpaces()
+        {
+            //Arrange
+            var value = """
+                        <note>
+                            <to>Tove</to>
+                            <from>Jani</from>
+                        </note>
+                        """;
+
+            //Act
+            var result = Instance.Parse(value);
+
+            //Assert
+            result.Should().BeEquivalentTo(new List<MetaString>
+            {
+                new()
+                {
+                    Text = "Tove",
+                    Tags = new List<MarkupTag>
+                    {
+                        new() { Name = "note", Kind = TagKind.Opening },
+                        new() { Name = "to", Kind = TagKind.Opening },
+                    }
+                },
+                new()
+                {
+                    Text = "Jani",
+                    Tags = new List<MarkupTag>
+                    {
+                        new() { Name = "note", Kind = TagKind.Opening },
+                        new() { Name = "from", Kind = TagKind.Opening },
+                    }
+                }
             });
         }
 
