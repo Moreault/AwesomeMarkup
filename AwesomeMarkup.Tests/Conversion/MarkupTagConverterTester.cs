@@ -33,7 +33,7 @@ public class MarkupTagConverterTester
         {
             //Arrange
             var value = Fixture.Create<string>();
-            MarkupLanguageSpecifications specifications = null;
+            MarkupLanguageSpecifications specifications = null!;
 
             //Act
             Action action = () => Instance.Convert(value, specifications);
@@ -102,6 +102,70 @@ public class MarkupTagConverterTester
 
             //Assert
             action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.StringDoesNotContainValidParameters, value)}");
+        }
+
+        [TestMethod]
+        public void WhenValueContainsSlashAtStartAndEnd_Throw()
+        {
+            //Arrange
+            var value = $"/{Fixture.Create<string>()}/";
+
+            //Act
+            Action action = () => Instance.Convert(value, new MarkupLanguageSpecifications());
+
+            //Assert
+            action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {Exceptions.ContainsSelfClosingAndClosingSlashes}");
+        }
+
+        [TestMethod]
+        public void WhenValueContainsTagAtStart_ReturnAsClosingTag()
+        {
+            //Arrange
+            var trimmedValue = Fixture.Create<string>();
+            var value = $"/{trimmedValue}";
+
+            var tagParameters = Fixture.Create<MarkupParameter>();
+            GetMock<IMarkupParameterConverter>().Setup(x => x.Convert(trimmedValue, new MarkupLanguageSpecifications())).Returns(new List<MarkupParameter> { tagParameters });
+
+            //Act
+            var result = Instance.Convert(value, new MarkupLanguageSpecifications());
+
+            //Assert
+            result.Kind.Should().Be(TagKind.Closing);
+        }
+
+        [TestMethod]
+        public void WhenValueContainsTagAtEnd_ReturnAsSelfClosingTag()
+        {
+            //Arrange
+            var trimmedValue = Fixture.Create<string>();
+            var value = $"{trimmedValue}/";
+
+            var tagParameters = Fixture.Create<MarkupParameter>();
+            GetMock<IMarkupParameterConverter>().Setup(x => x.Convert(trimmedValue, new MarkupLanguageSpecifications())).Returns(new List<MarkupParameter> { tagParameters });
+
+            //Act
+            var result = Instance.Convert(value, new MarkupLanguageSpecifications());
+
+            //Assert
+            result.Kind.Should().Be(TagKind.SelfClosing);
+        }
+
+        [TestMethod]
+        public void WhenValueStartsAndEndWithProcessingCharacters_ReturnAsProcessingTag()
+        {
+            //Arrange
+            var trimmedValue = Fixture.Create<string>();
+            var value = $"?{trimmedValue}?";
+
+            var tagParameters = Fixture.Create<MarkupParameter>();
+            GetMock<IMarkupParameterConverter>().Setup(x => x.Convert(trimmedValue, new MarkupLanguageSpecifications())).Returns(new List<MarkupParameter> { tagParameters });
+
+            //Act
+            var result = Instance.Convert(value, new MarkupLanguageSpecifications());
+
+            //Assert
+            result.Kind.Should().Be(TagKind.Processing);
         }
     }
 }
