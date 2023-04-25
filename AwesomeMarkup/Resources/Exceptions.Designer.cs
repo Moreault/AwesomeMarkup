@@ -70,11 +70,29 @@ namespace ToolBX.AwesomeMarkup.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ConflictingQuoteRules {
+            get {
+                return ResourceManager.GetString("ConflictingQuoteRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags with both opening and closing slashes are not supported.
         /// </summary>
         internal static string ContainsSelfClosingAndClosingSlashes {
             get {
                 return ResourceManager.GetString("ContainsSelfClosingAndClosingSlashes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attributes must have an even amount of quotes but had {0}.
+        /// </summary>
+        internal static string OddNumberOfQuotes {
+            get {
+                return ResourceManager.GetString("OddNumberOfQuotes", resourceCulture);
             }
         }
         
@@ -97,7 +115,7 @@ namespace ToolBX.AwesomeMarkup.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to &apos;{0} in &apos;{1}&apos; has too many &apos;{2}&apos; symbols.
         /// </summary>
         internal static string TooManyAssignationSymbols {
             get {

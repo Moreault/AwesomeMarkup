@@ -28,7 +28,7 @@ public class MarkupParameterConverterTester
         {
             //Arrange
             var value = Fixture.Create<string>();
-            MarkupLanguageSpecifications specifications = null;
+            MarkupLanguageSpecifications specifications = null!;
 
             //Act
             Action action = () => Instance.Convert(value, specifications);

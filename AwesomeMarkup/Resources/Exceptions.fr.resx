@@ -113,4 +113,10 @@
 	<data name="TooManyAssignationSymbols" xml:space="preserve">
 		<value>La partie '{0} dans '{1}' a trop de symboles '{2}'</value>
 	</data>
+	<data name="OddNumberOfQuotes" xml:space="preserve">
+		<value>Les attributs doivent avoir un nombre pair de caractères de citation mais en avait {0}</value>
+	</data>
+	<data name="ConflictingQuoteRules" xml:space="preserve">
+		<value>Les spécifications de langage ont des règles de caractères de citation en conflit</value>
+	</data>
 </root>

@@ -132,4 +132,10 @@
   <data name="TooManyAssignationSymbols" xml:space="preserve">
 	  <value>'{0} in '{1}' has too many '{2}' symbols</value>
   </data>
+  <data name="OddNumberOfQuotes" xml:space="preserve">
+	  <value>Attributes must have an even amount of quotes but had {0}</value>
+  </data>
+  <data name="ConflictingQuoteRules" xml:space="preserve">
+	  <value>Markup language specifications has conflicting quote rules</value>
+  </data>
 </root>

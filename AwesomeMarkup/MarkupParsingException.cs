@@ -1,6 +1,4 @@
-﻿using ToolBX.AwesomeMarkup.Resources;
-
-namespace ToolBX.AwesomeMarkup;
+﻿namespace ToolBX.AwesomeMarkup;
 
 public class MarkupParsingException : Exception
 {

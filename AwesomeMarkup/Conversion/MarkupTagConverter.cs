@@ -1,5 +1,4 @@
-﻿using ToolBX.AwesomeMarkup.Resources;
-using ToolBX.Collections.ReadOnly;
+﻿using ToolBX.Collections.ReadOnly;
 
 namespace ToolBX.AwesomeMarkup.Conversion;
 

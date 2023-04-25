@@ -1,6 +1,4 @@
-﻿using ToolBX.AwesomeMarkup.Resources;
-
-namespace ToolBX.AwesomeMarkup.Conversion;
+﻿namespace ToolBX.AwesomeMarkup.Conversion;
 
 public interface IMarkupTagLinker
 {

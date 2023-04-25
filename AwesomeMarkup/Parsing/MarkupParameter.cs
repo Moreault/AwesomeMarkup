@@ -2,7 +2,13 @@
 
 public record MarkupParameter
 {
-    public string Name { get; init; } = string.Empty;
+    public required string Name
+    {
+        get => _name;
+        init => _name = string.IsNullOrWhiteSpace(value) ? throw new ArgumentNullException(nameof(value)) : value;
+    }
+    private readonly string _name = null!;
+
     public string Value { get; init; } = string.Empty;
 
     public virtual bool Equals(MarkupParameter? other)

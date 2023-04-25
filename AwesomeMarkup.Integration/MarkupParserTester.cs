@@ -1,5 +1,6 @@
 ﻿using ToolBX.AwesomeMarkup;
 using ToolBX.AwesomeMarkup.Resources;
+using ToolBX.Collections.ReadOnly;
 using ToolBX.Eloquentest.Integration;
 
 namespace AwesomeMarkup.Integration;
@@ -22,7 +23,6 @@ public class MarkupParserTest
             //Assert
             action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.OpeningTagWithoutClosingTag, "Main")}");
         }
-
 
         [TestMethod]
         public void XmlWithoutProcessingTags()
@@ -407,20 +407,49 @@ public class MarkupParserTest
             });
         }
 
-        //TODO Disallow using unescaped tag brackets inside tags
-        [TestMethod]
-        public void UnescapedTagBracketsInsideTags()
-        {
-            //Arrange
-
-            //Act
-
-            //Assert
-        }
-
+        //TODO Priority : This is what is required for AwesomeMarkup to finally step out of beta
         //TODO Allow spaces (or whatever attribute separator) inside attribute values that are surrounded by quotes
         [TestMethod]
         public void SpacesInsideAttributesSurroundedByQuotes()
+        {
+            //Arrange
+            var value = """
+                        <note type="some thing or another">
+                            <to>Tove</to>
+                            <from>Jani</from>
+                        </note>
+                        """;
+
+            //Act
+            var result = Instance.Parse(value);
+
+            //Assert
+            result.Should().BeEquivalentTo(new List<MetaString>
+            {
+                new()
+                {
+                    Text = "Tove",
+                    Tags = new List<MarkupTag>
+                    {
+                        new() { Name = "note", Kind = TagKind.Opening, Attributes = new ReadOnlyList<MarkupParameter>(new MarkupParameter { Name = "type", Value = "some thing or another" })},
+                        new() { Name = "to", Kind = TagKind.Opening },
+                    }
+                },
+                new()
+                {
+                    Text = "Jani",
+                    Tags = new List<MarkupTag>
+                    {
+                        new() { Name = "note", Kind = TagKind.Opening, Attributes = new ReadOnlyList<MarkupParameter>(new MarkupParameter { Name = "type", Value = "some thing or another" })},
+                        new() { Name = "from", Kind = TagKind.Opening },
+                    }
+                }
+            });
+        }
+
+        //TODO Disallow using unescaped tag brackets inside tags (Ex : <color red=255 <something else>>)
+        [TestMethod]
+        public void UnescapedTagBracketsInsideTags()
         {
             //Arrange
 
