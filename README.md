@@ -4,9 +4,9 @@ Extracts any kind of markup information from a string of characters.
 
 ## Good to know
 
-This is meant to be used for short strings of text such as spoken dialog in a video game and not for entire documents. I don't believe this library would perform very well in the latter scenario.
+This library is currently in beta and might not perform very well in all scenarios. It does better when used against short strings of text rather than entire documents.
 
-If you're looking for a complete and ready-to-use dialog parsing library, use the DML.NET library instead.
+If you're looking for a complete and ready-to-use dialog parsing library, use the [DML.NET](https://github.com/Moreault/DML.NET) library instead.
 
 ## Getting started
 
@@ -54,9 +54,9 @@ var parsed = _markupParser.Parse("Some <color red=200 green=12 blue=54><underlin
 ## Known issues / TODO
 AwesomeMarkup is an ambitious project that is actively developped but still in beta. Standard use cases as discussed above are covered but it may not work very well for edge/weird cases.
 
-1.0.0 is planned to be released once the following is implemented :
--Allow spaces inside attribute values that are surrounded by quotes (important, this next on the list)
--Escapable brackets
--Support for self-closing tags (such as <br /> in HTML)
--You shouldn't be able to use unescaped tag brackets inside tags
--Support for XML processing tags (ex : <?version?>) (not very critical since I don't expect short strings to have this but it should be at the very least basically supported)
+Full release is planned once the following is implemented :
+- Allow spaces inside attribute values that are surrounded by quotes (important, this next on the list)
+- Escapable brackets
+- Support for self-closing tags (such as <br /> in HTML)
+- You shouldn't be able to use unescaped tag brackets inside tags
+- Support for XML processing tags (ex : <?version?>) (not very critical since I don't expect short strings to have this but it should be at the very least basically supported)
