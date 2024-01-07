@@ -1,6 +1,4 @@
-﻿using ToolBX.Collections.ReadOnly;
-
-namespace ToolBX.AwesomeMarkup.Parsing;
+﻿namespace ToolBX.AwesomeMarkup.Parsing;
 
 public interface IMarkupParser
 {
