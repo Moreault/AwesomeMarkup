@@ -1,6 +1,4 @@
-﻿using ToolBX.Collections.ReadOnly;
-
-namespace ToolBX.AwesomeMarkup.Conversion;
+﻿namespace ToolBX.AwesomeMarkup.Conversion;
 
 public interface IMarkupTagConverter
 {
