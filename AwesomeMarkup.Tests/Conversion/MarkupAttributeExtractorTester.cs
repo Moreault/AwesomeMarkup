@@ -1,11 +1,7 @@
 ﻿namespace ToolBX.AwesomeMarkup.Tests.Conversion;
 
 [TestClass]
-public class MarkupAttributeExtractorTester
+public class MarkupAttributeExtractorTester : Tester<MarkupAttributeExtractor>
 {
-    [TestClass]
-    public class Extract : Tester<MarkupAttributeExtractor>
-    {
-        //TODO Test
-    }
+    //TODO Test
 }
