@@ -1,85 +1,80 @@
-﻿using ToolBX.AwesomeMarkup.Resources;
-
-namespace ToolBX.AwesomeMarkup.Tests.Conversion;
+﻿namespace ToolBX.AwesomeMarkup.Tests.Conversion;
 
 [TestClass]
-public class MarkupParameterConverterTester
+public class MarkupParameterConverterTester : Tester<MarkupParameterConverter>
 {
-    [TestClass]
-    public class Convert : Tester<MarkupParameterConverter>
+    [TestMethod]
+    [DataRow("")]
+    [DataRow(" ")]
+    [DataRow(null)]
+    public void Convert_WhenValueIsEmpty_Throw(string value)
     {
-        [TestMethod]
-        [DataRow("")]
-        [DataRow(" ")]
-        [DataRow(null)]
-        public void WhenValueIsEmpty_Throw(string value)
-        {
-            //Arrange
+        //Arrange
 
-            //Act
-            Action action = () => Instance.Convert(value, new MarkupLanguageSpecifications());
+        //Act
+        Action action = () => Instance.Convert(value, new MarkupLanguageSpecifications());
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>();
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>();
+    }
 
-        [TestMethod]
-        public void WhenSpecificationsIsNull_Throw()
-        {
-            //Arrange
-            var value = Fixture.Create<string>();
-            MarkupLanguageSpecifications specifications = null!;
+    [TestMethod]
+    public void Convert_WhenSpecificationsIsNull_Throw()
+    {
+        //Arrange
+        var value = Dummy.Create<string>();
+        MarkupLanguageSpecifications specifications = null!;
 
-            //Act
-            Action action = () => Instance.Convert(value, specifications);
+        //Act
+        Action action = () => Instance.Convert(value, specifications);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>();
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>();
+    }
 
-        [TestMethod]
-        public void WhenOneWordHasMoreThanOneEqualSign_Throw()
-        {
-            //Arrange
-            var value = "IsEnabled=true=probably IsEngineer=Nope IsSeb=Maybe";
+    [TestMethod]
+    public void Convert_WhenOneWordHasMoreThanOneEqualSign_Throw()
+    {
+        //Arrange
+        var value = "IsEnabled=true=probably IsEngineer=Nope IsSeb=Maybe";
 
-            //Act
-            Action action = () => Instance.Convert(value, new MarkupLanguageSpecifications());
+        //Act
+        Action action = () => Instance.Convert(value, new MarkupLanguageSpecifications());
 
-            //Assert
-            action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.TooManyAssignationSymbols, "IsEnabled=true=probably", value, "=")}");
-        }
+        //Assert
+        action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.TooManyAssignationSymbols, "IsEnabled=true=probably", value, "=")}");
+    }
 
-        [TestMethod]
-        public void WhenOnlyContainsOneWordWithNoEqualsSignForValue_ReturnSingleParameterWithoutValue()
-        {
-            //Arrange
-            var value = "IsEnabled";
+    [TestMethod]
+    public void Convert_WhenOnlyContainsOneWordWithNoEqualsSignForValue_ReturnSingleParameterWithoutValue()
+    {
+        //Arrange
+        var value = "IsEnabled";
 
-            //Act
-            var result = Instance.Convert(value, new MarkupLanguageSpecifications());
+        //Act
+        var result = Instance.Convert(value, new MarkupLanguageSpecifications());
 
-            //Assert
-            result.Should().BeEquivalentTo(new List<MarkupParameter>
+        //Assert
+        result.Should().BeEquivalentTo(new List<MarkupParameter>
             {
                 new MarkupParameter
                 {
                     Name = "IsEnabled"
                 }
             });
-        }
+    }
 
-        [TestMethod]
-        public void WhenMultipleWordsHaveNoValue_ReturnValueLessParameters()
-        {
-            //Arrange
-            var value = "IsEnabled IsEngineer IsSeb";
+    [TestMethod]
+    public void Convert_WhenMultipleWordsHaveNoValue_ReturnValueLessParameters()
+    {
+        //Arrange
+        var value = "IsEnabled IsEngineer IsSeb";
 
-            //Act
-            var result = Instance.Convert(value, new MarkupLanguageSpecifications());
+        //Act
+        var result = Instance.Convert(value, new MarkupLanguageSpecifications());
 
-            //Assert
-            result.Should().BeEquivalentTo(new List<MarkupParameter>
+        //Assert
+        result.Should().BeEquivalentTo(new List<MarkupParameter>
             {
 
                 new MarkupParameter
@@ -94,19 +89,19 @@ public class MarkupParameterConverterTester
                     Name = "IsSeb"
                 }
             });
-        }
+    }
 
-        [TestMethod]
-        public void WhenMultipleWordsWithValues_ReturnThat()
-        {
-            //Arrange
-            var value = "IsEnabled=true IsEngineer=Nope IsSeb=Maybe";
+    [TestMethod]
+    public void Convert_WhenMultipleWordsWithValues_ReturnThat()
+    {
+        //Arrange
+        var value = "IsEnabled=true IsEngineer=Nope IsSeb=Maybe";
 
-            //Act
-            var result = Instance.Convert(value, new MarkupLanguageSpecifications());
+        //Act
+        var result = Instance.Convert(value, new MarkupLanguageSpecifications());
 
-            //Assert
-            result.Should().BeEquivalentTo(new List<MarkupParameter>
+        //Assert
+        result.Should().BeEquivalentTo(new List<MarkupParameter>
             {
 
                 new MarkupParameter
@@ -124,7 +119,6 @@ public class MarkupParameterConverterTester
                     Value = "Maybe"
                 }
             });
-        }
     }
 
 }

@@ -1,125 +1,119 @@
-﻿using ToolBX.AwesomeMarkup.Resources;
-
-namespace ToolBX.AwesomeMarkup.Tests.Conversion;
+﻿namespace ToolBX.AwesomeMarkup.Tests.Conversion;
 
 [TestClass]
-public class StringExtensionsTester
+public class StringExtensionsTester : Tester
 {
-    [TestClass]
-    public class SplitWithQuotes : Tester
+    [TestMethod]
+    public void SplitWithQuotes_WhenValueIsNull_Throw()
     {
-        [TestMethod]
-        public void WhenValueIsNull_Throw()
-        {
-            //Arrange
-            string value = null!;
-            var separator = Fixture.Create<char>();
+        //Arrange
+        string value = null!;
+        var separator = Dummy.Create<char>();
 
-            //Act
-            var action = () => value.SplitWithQuotes(separator);
+        //Act
+        var action = () => value.SplitWithQuotes(separator);
 
-            //Assert
-            action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(value));
-        }
+        //Assert
+        action.Should().Throw<ArgumentNullException>().WithParameterName(nameof(value));
+    }
 
-        [TestMethod]
-        [DataRow("")]
-        [DataRow(" ")]
-        public void WhenValueIsEmpty_ReturnEmpty(string value)
-        {
-            //Arrange
-            var separator = Fixture.Create<char>();
+    [TestMethod]
+    [DataRow("")]
+    [DataRow(" ")]
+    public void SplitWithQuotes_WhenValueIsEmpty_ReturnEmpty(string value)
+    {
+        //Arrange
+        var separator = Dummy.Create<char>();
 
-            //Act
-            var result = value.SplitWithQuotes(separator);
+        //Act
+        var result = value.SplitWithQuotes(separator);
 
-            //Assert
-            result.Should().BeEmpty();
-        }
+        //Assert
+        result.Should().BeEmpty();
+    }
 
-        [TestMethod]
-        public void WhenContainsOddNumberOfSingleQuotes_Throw()
-        {
-            //Arrange
-            var value = """person butt='round""";
-            var separator = ' ';
+    [TestMethod]
+    public void SplitWithQuotes_WhenContainsOddNumberOfSingleQuotes_Throw()
+    {
+        //Arrange
+        var value = """person butt='round""";
+        var separator = ' ';
 
-            //Act
-            var action = () => value.SplitWithQuotes(separator);
-            
-            //Assert
-            action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.OddNumberOfQuotes, 1)}");
-        }
+        //Act
+        var action = () => value.SplitWithQuotes(separator);
 
-        [TestMethod]
-        public void WhenContainsOddNumberOfDoubleQuotes_Throw()
-        {
-            //Arrange
-            var value = "player target=\"old\" class=engineer\"";
-            var separator = ' ';
+        //Assert
+        action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.OddNumberOfQuotes, 1)}");
+    }
 
-            //Act
-            var action = () => value.SplitWithQuotes(separator);
+    [TestMethod]
+    public void SplitWithQuotes_WhenContainsOddNumberOfDoubleQuotes_Throw()
+    {
+        //Arrange
+        var value = "player target=\"old\" class=engineer\"";
+        var separator = ' ';
 
-            //Assert
-            action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.OddNumberOfQuotes, 3)}");
-        }
+        //Act
+        var action = () => value.SplitWithQuotes(separator);
 
-        [TestMethod]
-        public void WhenContainsNoQuotes_SplitNormally()
-        {
-            //Arrange
-            var value = "player target=old class=engineer";
-            var separator = ' ';
+        //Assert
+        action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.OddNumberOfQuotes, 3)}");
+    }
 
-            //Act
-            var result = value.SplitWithQuotes(separator);
+    [TestMethod]
+    public void SplitWithQuotes_WhenContainsNoQuotes_SplitNormally()
+    {
+        //Arrange
+        var value = "player target=old class=engineer";
+        var separator = ' ';
 
-            //Assert
-            result.Should().BeEquivalentTo(new List<string>
+        //Act
+        var result = value.SplitWithQuotes(separator);
+
+        //Assert
+        result.Should().BeEquivalentTo(new List<string>
             {
                 "player",
                 "target=old",
                 "class=engineer"
             });
-        }
+    }
 
-        [TestMethod]
-        public void WhenContainsAnEvenAmountOfSingleQuotes_SplitByIgnoringSeparatorsBetweenQuotes()
-        {
-            //Arrange
-            var value = "player target='old and grey' class='engineer first class'";
-            var separator = ' ';
+    [TestMethod]
+    public void SplitWithQuotes_WhenContainsAnEvenAmountOfSingleQuotes_SplitByIgnoringSeparatorsBetweenQuotes()
+    {
+        //Arrange
+        var value = "player target='old and grey' class='engineer first class'";
+        var separator = ' ';
 
-            //Act
-            var result = value.SplitWithQuotes(separator);
+        //Act
+        var result = value.SplitWithQuotes(separator);
 
-            //Assert
-            result.Should().BeEquivalentTo(new List<string>
+        //Assert
+        result.Should().BeEquivalentTo(new List<string>
             {
                 "player",
                 "target='old and grey'",
                 "class='engineer first class'"
             });
-        }
+    }
 
-        [TestMethod]
-        public void WhenContainsAnEvenAmountOfDoubleQuotes_SplitByIgnoringSeparatorsBetweenQuotes()
-        {
-            //Arrange
-            var value = "player target=\"old and grey\" class=\"engineer first class\"";
-            var separator = ' ';
+    [TestMethod]
+    public void SplitWithQuotes_WhenContainsAnEvenAmountOfDoubleQuotes_SplitByIgnoringSeparatorsBetweenQuotes()
+    {
+        //Arrange
+        var value = "player target=\"old and grey\" class=\"engineer first class\"";
+        var separator = ' ';
 
-            //Act
-            var result = value.SplitWithQuotes(separator);
+        //Act
+        var result = value.SplitWithQuotes(separator);
 
-            //Assert
-            result.Should().BeEquivalentTo(new List<string>
+        //Assert
+        result.Should().BeEquivalentTo(new List<string>
             {
                 "player",
                 "target=\"old and grey\"",
                 "class=\"engineer first class\""
             });
-        }
     }
 }

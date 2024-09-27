@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwesomeMarkup", "AwesomeMar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwesomeMarkup.Tests", "AwesomeMarkup.Tests\AwesomeMarkup.Tests.csproj", "{90B3D112-B7D0-4BFE-A919-30399448BC5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwesomeMarkup.Integration", "AwesomeMarkup.Integration\AwesomeMarkup.Integration.csproj", "{1FC36FFF-9C2E-450A-A27B-879F1E68B7DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwesomeMarkup.Sample", "AwesomeMarkup.Sample\AwesomeMarkup.Sample.csproj", "{60BBC1B4-C114-456E-B079-FA11858D6CA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{90B3D112-B7D0-4BFE-A919-30399448BC5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90B3D112-B7D0-4BFE-A919-30399448BC5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90B3D112-B7D0-4BFE-A919-30399448BC5B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1FC36FFF-9C2E-450A-A27B-879F1E68B7DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1FC36FFF-9C2E-450A-A27B-879F1E68B7DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1FC36FFF-9C2E-450A-A27B-879F1E68B7DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1FC36FFF-9C2E-450A-A27B-879F1E68B7DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60BBC1B4-C114-456E-B079-FA11858D6CA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60BBC1B4-C114-456E-B079-FA11858D6CA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60BBC1B4-C114-456E-B079-FA11858D6CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60BBC1B4-C114-456E-B079-FA11858D6CA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
