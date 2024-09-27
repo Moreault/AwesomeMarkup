@@ -47,6 +47,7 @@ public sealed class TestRunner : ITestRunner
 
         //Assert
         action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.OpeningTagWithoutClosingTag, "Main")}");
+        _terminal.Write($"{nameof(WhenStackTrace_Throw)} : Passed!");
     }
 
     private void XmlWithoutProcessingTags()
@@ -139,6 +140,7 @@ public sealed class TestRunner : ITestRunner
                 {
                     Text = " je ne suis plus rouge"
                 }});
+        _terminal.Write($"{nameof(XmlWithoutProcessingTags)} : Passed!");
     }
 
     private void NestedTags()
@@ -179,6 +181,7 @@ public sealed class TestRunner : ITestRunner
                 Text = "."
             }
         });
+        _terminal.Write($"{nameof(NestedTags)} : Passed!");
     }
 
     private void SimpleColorTag()
@@ -214,6 +217,7 @@ public sealed class TestRunner : ITestRunner
                 Text = "."
             }
         });
+        _terminal.Write($"{nameof(SimpleColorTag)} : Passed!");
     }
 
     private void MultipleColorTags()
@@ -276,6 +280,7 @@ public sealed class TestRunner : ITestRunner
                     Text = "."
                 }
             });
+        _terminal.Write($"{nameof(MultipleColorTags)} : Passed!");
     }
 
     private void NestedAndConsecutiveTagsOfSameName()
@@ -322,6 +327,7 @@ public sealed class TestRunner : ITestRunner
                 }
             }
         });
+        _terminal.Write($"{nameof(MultipleColorTags)} : Passed!");
     }
 
     private void ProcessingTags()
@@ -386,6 +392,7 @@ public sealed class TestRunner : ITestRunner
                 }
             },
         });
+        _terminal.Write($"{nameof(ProcessingTags)} : Passed!");
     }
 
     private void LineBreaksAndSpaces()
@@ -423,6 +430,7 @@ public sealed class TestRunner : ITestRunner
                     }
                 }
             });
+        _terminal.Write($"{nameof(LineBreaksAndSpaces)} : Passed!");
     }
 
     //TODO Priority : This is what is required for AwesomeMarkup to finally step out of beta
@@ -462,6 +470,7 @@ public sealed class TestRunner : ITestRunner
                     }
                 }
             });
+        _terminal.Write($"{nameof(SpacesInsideAttributesSurroundedByQuotes)} : Passed!");
     }
 
     //TODO Disallow using unescaped tag brackets inside tags (Ex : <color red=255 <something else>>)
