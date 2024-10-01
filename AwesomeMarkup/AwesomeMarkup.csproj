@@ -30,7 +30,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="ToolBX.AutoInject" Version="3.0.0" />
+	  <PackageReference Include="ToolBX.AutoInject" Version="3.0.1" />
 	  <PackageReference Include="ToolBX.Collections.ReadOnly" Version="3.0.0" />
 	  <PackageReference Include="ToolBX.Mathemancy" Version="3.0.0" />
 	  <PackageReference Include="ToolBX.OPEX" Version="3.0.1" />
