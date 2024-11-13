@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="FluentAssertions" Version="6.12.1" />
+	  <PackageReference Include="FluentAssertions" Version="6.12.2" />
 	  <PackageReference Include="ToolBX.AssemblyInitializer.Console" Version="3.0.0" />
 	  <PackageReference Include="ToolBX.MisterTerminal" Version="3.0.0" />
 	</ItemGroup>
