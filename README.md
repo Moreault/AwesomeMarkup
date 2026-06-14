@@ -12,12 +12,16 @@ If you're looking for a complete and ready-to-use dialog parsing library, use th
 
 ### Setup
 
-This library makes use of AutoInject to automatically inject its dependencies. If you already use AutoInject or AssemblyInitializer then you have nothing to do for this step.
-
-If you are using dependency injection without AutoInject or AssemblyInitializer then you'll need to use the following in your initialization code :
+Register AwesomeMarkup's services in your initialization code :
 
 ```c#
 services.AddAwesomeMarkup();
+```
+
+Registration is fully explicit and reflection-free, so the library is trimming/NativeAOT-safe. By default services are registered as `Singleton`; pass a different `ServiceLifetime` if you need to override it :
+
+```c#
+services.AddAwesomeMarkup(ServiceLifetime.Scoped);
 ```
 
 ### Injection

@@ -5,7 +5,6 @@ public interface IMarkupParameterConverter
     IReadOnlyList<MarkupParameter> Convert(string value, MarkupLanguageSpecifications specifications);
 }
 
-[AutoInject]
 public class MarkupParameterConverter : IMarkupParameterConverter
 {
     public IReadOnlyList<MarkupParameter> Convert(string value, MarkupLanguageSpecifications specifications)

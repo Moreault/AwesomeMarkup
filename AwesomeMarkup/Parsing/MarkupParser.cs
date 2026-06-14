@@ -5,7 +5,6 @@ public interface IMarkupParser
     IReadOnlyList<MetaString> Parse(string value, MarkupLanguageSpecifications? specifications = null);
 }
 
-[AutoInject]
 public class MarkupParser : IMarkupParser
 {
     private const int MaxRecursionDepth = 100;

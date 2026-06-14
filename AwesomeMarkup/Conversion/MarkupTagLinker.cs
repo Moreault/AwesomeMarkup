@@ -5,7 +5,6 @@ public interface IMarkupTagLinker
     IReadOnlyList<LinkedTag> Link(IReadOnlyList<MarkupTagInfo> markupTagInfo);
 }
 
-[AutoInject]
 public class MarkupTagLinker : IMarkupTagLinker
 {
     public IReadOnlyList<LinkedTag> Link(IReadOnlyList<MarkupTagInfo> markupTagInfo)

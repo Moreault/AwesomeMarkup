@@ -5,7 +5,6 @@ public interface IMarkupAttributeExtractor
     IReadOnlyList<string> Extract(string value, MarkupLanguageSpecifications specifications);
 }
 
-[AutoInject]
 public class MarkupAttributeExtractor : IMarkupAttributeExtractor
 {
     public IReadOnlyList<string> Extract(string value, MarkupLanguageSpecifications specifications)

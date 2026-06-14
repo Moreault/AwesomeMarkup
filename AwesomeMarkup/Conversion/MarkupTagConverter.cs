@@ -5,7 +5,6 @@ public interface IMarkupTagConverter
     MarkupTag Convert(string value, MarkupLanguageSpecifications specifications);
 }
 
-[AutoInject]
 public class MarkupTagConverter : IMarkupTagConverter
 {
     private readonly IMarkupParameterConverter _markupParameterConverter;

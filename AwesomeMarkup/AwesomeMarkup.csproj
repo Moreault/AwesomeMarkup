@@ -4,7 +4,7 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>4.0.0</Version>
+		<Version>4.0.0-beta.1</Version>
 		<RootNamespace>ToolBX.$(AssemblyName)</RootNamespace>
 		<PackageId>ToolBX.$(AssemblyName)</PackageId>
 		<Product>ToolBX.$(AssemblyName)</Product>
@@ -16,6 +16,9 @@
 		<Description>Extracts any kind of markup information from a string of characters.</Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>awesomemarkup.png</PackageIcon>
+		<IsAotCompatible>true</IsAotCompatible>
+		<IsTrimmable>false</IsTrimmable>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -30,7 +33,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="ToolBX.AutoInject" Version="4.0.0-beta.2" />
 	  <PackageReference Include="ToolBX.Collections.ReadOnly" Version="4.0.0-beta.1" />
 	  <PackageReference Include="ToolBX.Mathemancy" Version="4.0.0-beta.1" />
 	  <PackageReference Include="ToolBX.OPEX" Version="4.0.0-beta.1" />
