@@ -1,4 +1,4 @@
-﻿namespace ToolBX.AwesomeMarkup.Parsing;
+namespace ToolBX.AwesomeMarkup.Parsing;
 
 public interface IMarkupParser
 {
@@ -8,6 +8,8 @@ public interface IMarkupParser
 [AutoInject]
 public class MarkupParser : IMarkupParser
 {
+    private const int MaxRecursionDepth = 100;
+
     private readonly IMarkupExtractor _markupExtractor;
     private readonly IMarkupTagLinker _markupTagLinker;
 
@@ -24,8 +26,18 @@ public class MarkupParser : IMarkupParser
     //TODO Support single self-closing tags ex : <br />
     public IReadOnlyList<MetaString> Parse(string value, MarkupLanguageSpecifications? specifications = null)
     {
-        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException(nameof(value));
+        if (string.IsNullOrWhiteSpace(value))
+            throw string.IsNullOrEmpty(value)
+                ? new ArgumentNullException(nameof(value))
+                : new ArgumentException(Exceptions.ValueCannotBeWhitespace, nameof(value));
         specifications ??= MarkupLanguageSpecifications.Dml;
+
+        return ParseInternal(value, specifications, 0);
+    }
+
+    private IReadOnlyList<MetaString> ParseInternal(string value, MarkupLanguageSpecifications specifications, int depth)
+    {
+        if (depth > MaxRecursionDepth) throw new MarkupParsingException(Exceptions.MaxRecursionDepthExceeded);
 
         var tags = _markupExtractor.Extract(value, specifications);
         var linkedTags = _markupTagLinker.Link(tags);
@@ -36,10 +48,12 @@ public class MarkupParser : IMarkupParser
         {
             if (value[currentIndex] == specifications.Brackets.Opening)
             {
-                var currentLink = linkedTags.Single(x => x.StartIndex == currentIndex);
-                var nestedMetaStrings = currentLink.Opening == currentLink.Closing ? 
-                    Array.Empty<MetaString>() : 
-                    Parse(value.Substring(currentLink.Opening.EndIndex + 1, currentLink.Closing.StartIndex - currentLink.Opening.EndIndex - 1));
+                var currentLink = linkedTags.SingleOrDefault(x => x.StartIndex == currentIndex);
+                if (currentLink == null) throw new MarkupParsingException(string.Format(Exceptions.UnmatchedOpeningBracket, currentIndex));
+
+                var nestedMetaStrings = currentLink.Opening == currentLink.Closing ?
+                    Array.Empty<MetaString>() :
+                    ParseInternal(value.Substring(currentLink.Opening.EndIndex + 1, currentLink.Closing.StartIndex - currentLink.Opening.EndIndex - 1), specifications, depth + 1);
 
                 currentIndex = currentLink.EndIndex + 1;
 

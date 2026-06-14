@@ -119,4 +119,28 @@
 	<data name="ConflictingQuoteRules" xml:space="preserve">
 		<value>Les spécifications de langage ont des règles de caractères de citation en conflit</value>
 	</data>
+	<data name="MismatchedBracketCount" xml:space="preserve">
+		<value>Il devrait y avoir le même nombre de crochets ouvrants et fermants dans '{0}' mais il y en a {1} et {2} respectivement</value>
+	</data>
+	<data name="ValueCannotBeWhitespace" xml:space="preserve">
+		<value>La valeur ne peut pas être vide ou composée uniquement d'espaces</value>
+	</data>
+	<data name="MaxRecursionDepthExceeded" xml:space="preserve">
+		<value>Profondeur de récursion maximale dépassée lors de l'analyse du balisage imbriqué</value>
+	</data>
+	<data name="UnmatchedOpeningBracket" xml:space="preserve">
+		<value>Aucune balise liée trouvée à l'index {0}</value>
+	</data>
+	<data name="UnmatchedClosingTag" xml:space="preserve">
+		<value>Des balises fermantes ont été trouvées sans balises ouvrantes correspondantes</value>
+	</data>
+	<data name="DoubleQuotesDisallowed" xml:space="preserve">
+		<value>Des guillemets doubles ont été trouvés dans la chaîne mais les spécifications les interdisent</value>
+	</data>
+	<data name="SingleQuotesDisallowed" xml:space="preserve">
+		<value>Des guillemets simples ont été trouvés dans la chaîne mais les spécifications les interdisent</value>
+	</data>
+	<data name="AttributeValueMustBeQuoted" xml:space="preserve">
+		<value>La valeur de l'attribut doit être entre guillemets mais ce n'était pas le cas</value>
+	</data>
 </root>

@@ -17,13 +17,16 @@ public class MarkupExtractor : IMarkupExtractor
 
     public IReadOnlyList<MarkupTagInfo> Extract(string value, MarkupLanguageSpecifications specifications)
     {
-        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException(nameof(value));
+        if (string.IsNullOrWhiteSpace(value))
+            throw string.IsNullOrEmpty(value)
+                ? new ArgumentNullException(nameof(value))
+                : new ArgumentException(Exceptions.ValueCannotBeWhitespace, nameof(value));
         if (specifications == null) throw new ArgumentNullException(nameof(specifications));
 
         var openingBrackets = value.IndexesOf(specifications.Brackets.Opening);
         var closingBrackets = value.IndexesOf(specifications.Brackets.Closing);
 
-        if (openingBrackets.Count != closingBrackets.Count) throw new Exception($"Can't extract tags : There should be the same amount of opening and closing brackets in '{value}' but there are {openingBrackets.Count} and {closingBrackets.Count} respectively.");
+        if (openingBrackets.Count != closingBrackets.Count) throw new MarkupParsingException(string.Format(Exceptions.MismatchedBracketCount, value, openingBrackets.Count, closingBrackets.Count));
 
         var tagInfo = new List<MarkupTagInfo>();
         for (var i = 0; i < openingBrackets.Count; i++)

@@ -14,11 +14,12 @@ public class MarkupTagLinker : IMarkupTagLinker
 
         var linked = new List<LinkedTag>();
 
-        var tempList = markupTagInfo.ToList();
+        var tempList = new List<MarkupTagInfo>(markupTagInfo);
 
         while (tempList.Any())
         {
-            var openingTag = tempList.Last(x => x.Kind is TagKind.Opening or TagKind.SelfClosing or TagKind.Processing);
+            var openingTag = tempList.LastOrDefault(x => x.Kind is TagKind.Opening or TagKind.SelfClosing or TagKind.Processing);
+            if (openingTag == null) throw new MarkupParsingException(Exceptions.UnmatchedClosingTag);
 
             var closingTag = tempList.FirstOrDefault(x => x.Kind is TagKind.Closing && x.StartIndex > openingTag.EndIndex && string.Equals(x.Tag.Name, openingTag.Tag.Name, StringComparison.InvariantCultureIgnoreCase));
             if (closingTag == null && !openingTag.IsClosing) throw new MarkupParsingException(string.Format(Exceptions.OpeningTagWithoutClosingTag, openingTag.Tag.Name));

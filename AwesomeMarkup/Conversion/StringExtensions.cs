@@ -1,4 +1,4 @@
-﻿namespace ToolBX.AwesomeMarkup.Conversion;
+namespace ToolBX.AwesomeMarkup.Conversion;
 
 internal static class StringExtensions
 {
@@ -15,27 +15,21 @@ internal static class StringExtensions
         var doubleQuotes = value.IndexesOf('\"');
         if (doubleQuotes.Count % 2 != 0) throw new MarkupParsingException(string.Format(Exceptions.OddNumberOfQuotes, doubleQuotes.Count));
 
-        var ranges = new List<Range<int>>();
+        var quotedIndices = new HashSet<int>();
 
-        var index = 0;
-        while (index < singleQuotes.Count)
+        for (var i = 0; i < singleQuotes.Count; i += 2)
         {
-            var first = singleQuotes[index];
-            var next = singleQuotes[index + 1];
-            ranges.Add(new Range<int>(first, next));
-            index += 2;
+            for (var j = singleQuotes[i]; j <= singleQuotes[i + 1]; j++)
+                quotedIndices.Add(j);
         }
 
-        index = 0;
-        while (index < doubleQuotes.Count)
+        for (var i = 0; i < doubleQuotes.Count; i += 2)
         {
-            var first = doubleQuotes[index];
-            var next = doubleQuotes[index + 1];
-            ranges.Add(new Range<int>(first, next));
-            index += 2;
+            for (var j = doubleQuotes[i]; j <= doubleQuotes[i + 1]; j++)
+                quotedIndices.Add(j);
         }
 
-        var actualSplits = splits.Where(split => !ranges.Any(x => x.Start <= split && x.End >= split)).Concat(value.LastIndex() + 1).ToList();
+        var actualSplits = splits.Where(split => !quotedIndices.Contains(split)).Concat(value.LastIndex() + 1).ToList();
 
         var output = new List<string>();
         var lastSplit = 0;

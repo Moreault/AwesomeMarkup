@@ -1,4 +1,4 @@
-﻿namespace ToolBX.AwesomeMarkup.Conversion;
+namespace ToolBX.AwesomeMarkup.Conversion;
 
 public interface IMarkupParameterConverter
 {
@@ -8,18 +8,20 @@ public interface IMarkupParameterConverter
 [AutoInject]
 public class MarkupParameterConverter : IMarkupParameterConverter
 {
-    //TODO Better exception messages
     public IReadOnlyList<MarkupParameter> Convert(string value, MarkupLanguageSpecifications specifications)
     {
-        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException(nameof(value));
+        if (string.IsNullOrWhiteSpace(value))
+            throw string.IsNullOrEmpty(value)
+                ? new ArgumentNullException(nameof(value))
+                : new ArgumentException(Exceptions.ValueCannotBeWhitespace, nameof(value));
         if (specifications == null) throw new ArgumentNullException(nameof(specifications));
 
         if (!specifications.Attributes.QuoteRules.Double && value.Contains("\""))
-            throw new MarkupParsingException("Double quotes found in string but specifications disallow double quotes!");
+            throw new MarkupParsingException(Exceptions.DoubleQuotesDisallowed);
         if (!specifications.Attributes.QuoteRules.Single && value.Contains("'"))
-            throw new MarkupParsingException("Single quotes found in string but specifications disallow single quotes!");
+            throw new MarkupParsingException(Exceptions.SingleQuotesDisallowed);
 
-        var words = value.SplitWithQuotes(specifications.Attributes.Separator).ToList();
+        var words = value.SplitWithQuotes(specifications.Attributes.Separator);
 
         var parameters = new List<MarkupParameter>();
         foreach (var word in words)
@@ -29,8 +31,8 @@ public class MarkupParameterConverter : IMarkupParameterConverter
             var parameterName = nameAndValue.First();
 
             var parameterValue = nameAndValue.Length == 1 ? string.Empty : nameAndValue[1];
-            if (!specifications.Attributes.QuoteRules.Quoteless && (parameterValue.Contains("\"") || parameterValue.Contains("'")))
-                throw new MarkupParsingException("Attribute value is expected to be between quotes but it was not the case");
+            if (!specifications.Attributes.QuoteRules.Quoteless && !parameterValue.Contains("\"") && !parameterValue.Contains("'"))
+                throw new MarkupParsingException(Exceptions.AttributeValueMustBeQuoted);
 
             parameters.Add(new MarkupParameter
             {

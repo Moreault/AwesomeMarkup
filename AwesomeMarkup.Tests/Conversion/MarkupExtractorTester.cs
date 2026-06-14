@@ -1,16 +1,15 @@
-﻿namespace ToolBX.AwesomeMarkup.Tests.Conversion;
+namespace ToolBX.AwesomeMarkup.Tests.Conversion;
 
 [TestClass]
 public class MarkupExtractorTester : Tester<MarkupExtractor>
 {
     [TestMethod]
     [DataRow("")]
-    [DataRow(" ")]
     [DataRow(null)]
-    public void Extract_WhenValueIsEmpty_Throw(string value)
+    public void Extract_WhenValueIsNullOrEmpty_ThrowArgumentNullException(string value)
     {
         //Arrange
-        var specifications = Dummy.Create<MarkupLanguageSpecifications>();
+        var specifications = MarkupLanguageSpecifications.Dml;
 
         //Act
         var action = () => Instance.Extract(value, specifications);
@@ -20,10 +19,25 @@ public class MarkupExtractorTester : Tester<MarkupExtractor>
     }
 
     [TestMethod]
+    [DataRow(" ")]
+    [DataRow("   ")]
+    public void Extract_WhenValueIsWhitespace_ThrowArgumentException(string value)
+    {
+        //Arrange
+        var specifications = MarkupLanguageSpecifications.Dml;
+
+        //Act
+        var action = () => Instance.Extract(value, specifications);
+
+        //Assert
+        action.Should().Throw<ArgumentException>().WithMessage($"{Exceptions.ValueCannotBeWhitespace}*");
+    }
+
+    [TestMethod]
     public void Extract_WhenSpecificationsNull_Throw()
     {
         //Arrange
-        var value = Dummy.Create<string>();
+        var value = "some string";
         MarkupLanguageSpecifications specifications = null!;
 
         //Act
@@ -43,7 +57,7 @@ public class MarkupExtractorTester : Tester<MarkupExtractor>
         var action = () => Instance.Extract(value, MarkupLanguageSpecifications.Dml);
 
         //Assert
-        action.Should().Throw<Exception>().WithMessage($"Can't extract tags : There should be the same amount of opening and closing brackets in '{value}' but there are 2 and 1 respectively.");
+        action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.MismatchedBracketCount, value, 2, 1)}");
     }
 
     [TestMethod]
@@ -56,7 +70,7 @@ public class MarkupExtractorTester : Tester<MarkupExtractor>
         var action = () => Instance.Extract(value, MarkupLanguageSpecifications.Dml);
 
         //Assert
-        action.Should().Throw<Exception>().WithMessage($"Can't extract tags : There should be the same amount of opening and closing brackets in '{value}' but there are 1 and 3 respectively.");
+        action.Should().Throw<MarkupParsingException>().WithMessage($"{Exceptions.CannotParseString} : {string.Format(Exceptions.MismatchedBracketCount, value, 1, 3)}");
     }
 
     [TestMethod]

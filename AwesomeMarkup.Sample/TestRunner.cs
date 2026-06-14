@@ -327,7 +327,7 @@ public sealed class TestRunner : ITestRunner
                 }
             }
         });
-        _terminal.Write($"{nameof(MultipleColorTags)} : Passed!");
+        _terminal.Write($"{nameof(NestedAndConsecutiveTagsOfSameName)} : Passed!");
     }
 
     private void ProcessingTags()

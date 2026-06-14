@@ -1,4 +1,4 @@
-﻿namespace ToolBX.AwesomeMarkup.Tests.Parsing;
+namespace ToolBX.AwesomeMarkup.Tests.Parsing;
 
 [TestClass]
 public class MarkupParserTest
@@ -6,12 +6,10 @@ public class MarkupParserTest
     [TestClass]
     public class Parse : Tester<MarkupParser>
     {
-        //TODO Test
         [TestMethod]
         [DataRow("")]
-        [DataRow(" ")]
         [DataRow(null)]
-        public void WhenValueIsEmpty_Throw(string value)
+        public void WhenValueIsNullOrEmpty_ThrowArgumentNullException(string value)
         {
             //Arrange
 
@@ -20,6 +18,20 @@ public class MarkupParserTest
 
             //Assert
             action.Should().Throw<ArgumentNullException>();
+        }
+
+        [TestMethod]
+        [DataRow(" ")]
+        [DataRow("   ")]
+        public void WhenValueIsWhitespace_ThrowArgumentException(string value)
+        {
+            //Arrange
+
+            //Act
+            var action = () => Instance.Parse(value);
+
+            //Assert
+            action.Should().Throw<ArgumentException>().WithMessage($"{Exceptions.ValueCannotBeWhitespace}*");
         }
     }
 }

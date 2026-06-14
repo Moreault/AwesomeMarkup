@@ -1,13 +1,12 @@
-﻿namespace ToolBX.AwesomeMarkup.Tests.Conversion;
+namespace ToolBX.AwesomeMarkup.Tests.Conversion;
 
 [TestClass]
 public class MarkupParameterConverterTester : Tester<MarkupParameterConverter>
 {
     [TestMethod]
     [DataRow("")]
-    [DataRow(" ")]
     [DataRow(null)]
-    public void Convert_WhenValueIsEmpty_Throw(string value)
+    public void Convert_WhenValueIsNullOrEmpty_ThrowArgumentNullException(string value)
     {
         //Arrange
 
@@ -19,10 +18,24 @@ public class MarkupParameterConverterTester : Tester<MarkupParameterConverter>
     }
 
     [TestMethod]
+    [DataRow(" ")]
+    [DataRow("   ")]
+    public void Convert_WhenValueIsWhitespace_ThrowArgumentException(string value)
+    {
+        //Arrange
+
+        //Act
+        Action action = () => Instance.Convert(value, new MarkupLanguageSpecifications());
+
+        //Assert
+        action.Should().Throw<ArgumentException>().WithMessage($"{Exceptions.ValueCannotBeWhitespace}*");
+    }
+
+    [TestMethod]
     public void Convert_WhenSpecificationsIsNull_Throw()
     {
         //Arrange
-        var value = Dummy.Create<string>();
+        var value = "some string";
         MarkupLanguageSpecifications specifications = null!;
 
         //Act
