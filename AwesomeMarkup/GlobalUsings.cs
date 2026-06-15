@@ -1,7 +1,6 @@
 // Global using directives
 
 global using ToolBX.AwesomeMarkup.Resources;
-global using ToolBX.Collections.ReadOnly;
-global using ToolBX.Mathemancy;
-global using ToolBX.OPEX;
-global using ToolBX.SmartyStrings;
+global using ToolBX.AwesomeMarkup.Specifications;
+global using ToolBX.AwesomeMarkup.Parsing;
+global using Microsoft.Extensions.DependencyInjection;

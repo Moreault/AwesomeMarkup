@@ -162,4 +162,13 @@
   <data name="AttributeValueMustBeQuoted" xml:space="preserve">
 	  <value>Attribute value is expected to be between quotes but it was not the case</value>
   </data>
+  <data name="UnescapedBracketInTag" xml:space="preserve">
+	  <value>Unescaped opening bracket found inside a tag at index {0}</value>
+  </data>
+  <data name="UnclosedTag" xml:space="preserve">
+	  <value>Opening bracket at index {0} has no matching closing bracket</value>
+  </data>
+  <data name="MismatchedClosingTag" xml:space="preserve">
+	  <value>Closing tag '{0}' does not match the currently open tag '{1}'</value>
+  </data>
 </root>

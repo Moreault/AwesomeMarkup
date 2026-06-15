@@ -187,6 +187,33 @@ namespace ToolBX.AwesomeMarkup.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Unescaped opening bracket found inside a tag at index {0}.
+        /// </summary>
+        internal static string UnescapedBracketInTag {
+            get {
+                return ResourceManager.GetString("UnescapedBracketInTag", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Opening bracket at index {0} has no matching closing bracket.
+        /// </summary>
+        internal static string UnclosedTag {
+            get {
+                return ResourceManager.GetString("UnclosedTag", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Closing tag &apos;{0}&apos; does not match the currently open tag &apos;{1}&apos;.
+        /// </summary>
+        internal static string MismatchedClosingTag {
+            get {
+                return ResourceManager.GetString("MismatchedClosingTag", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Value cannot be empty or whitespace.
         /// </summary>
         internal static string ValueCannotBeWhitespace {

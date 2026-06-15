@@ -10,11 +10,6 @@ public static class ServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(services);
 
         services.Add(new ServiceDescriptor(typeof(IMarkupParser), typeof(MarkupParser), lifetime));
-        services.Add(new ServiceDescriptor(typeof(IMarkupExtractor), typeof(MarkupExtractor), lifetime));
-        services.Add(new ServiceDescriptor(typeof(IMarkupTagConverter), typeof(MarkupTagConverter), lifetime));
-        services.Add(new ServiceDescriptor(typeof(IMarkupParameterConverter), typeof(MarkupParameterConverter), lifetime));
-        services.Add(new ServiceDescriptor(typeof(IMarkupAttributeExtractor), typeof(MarkupAttributeExtractor), lifetime));
-        services.Add(new ServiceDescriptor(typeof(IMarkupTagLinker), typeof(MarkupTagLinker), lifetime));
 
         return services;
     }
