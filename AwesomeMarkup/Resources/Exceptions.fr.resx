@@ -143,4 +143,13 @@
 	<data name="AttributeValueMustBeQuoted" xml:space="preserve">
 		<value>La valeur de l'attribut doit être entre guillemets mais ce n'était pas le cas</value>
 	</data>
+	<data name="UnescapedBracketInTag" xml:space="preserve">
+		<value>Un crochet ouvrant non échappé a été trouvé à l'intérieur d'une balise à l'index {0}</value>
+	</data>
+	<data name="UnclosedTag" xml:space="preserve">
+		<value>Le crochet ouvrant à l'index {0} n'a pas de crochet fermant correspondant</value>
+	</data>
+	<data name="MismatchedClosingTag" xml:space="preserve">
+		<value>La balise fermante '{0}' ne correspond pas à la balise actuellement ouverte '{1}'</value>
+	</data>
 </root>
