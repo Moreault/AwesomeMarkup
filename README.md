@@ -80,4 +80,4 @@ Escaping is opt-in : it is disabled (`null`) by default and only escapes the ope
 
 ## Performance
 
-As of 4.0.0 the parser performs a single pass over the input using a span-based lexer and an explicit tag stack, instead of repeatedly extracting and re-parsing nested content. This removes the previous quadratic tag-linking and the large intermediate allocations, so it now handles longer strings and deeper nesting comfortably. (not very critical since I don't expect short strings to have this but it should be at the very least basically supported)
+As of 4.0.0 the parser performs a single pass over the input using a span-based lexer and an explicit tag stack, instead of repeatedly extracting and re-parsing nested content. This removes the previous quadratic tag-linking and the large intermediate allocations, so it now handles longer strings and deeper nesting comfortably.
