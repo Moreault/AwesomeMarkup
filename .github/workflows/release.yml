@@ -23,16 +23,16 @@ jobs:
         dotnet-version: 10.0.x
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore AwesomeMarkup.Tests/AwesomeMarkup.Tests.csproj
 
     - name: Build project
-      run: dotnet build --configuration Release
+      run: dotnet build AwesomeMarkup.Tests/AwesomeMarkup.Tests.csproj --no-restore --configuration Release
 
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test AwesomeMarkup.Tests/AwesomeMarkup.Tests.csproj --no-build --configuration Release --verbosity normal
 
     - name: Pack projects
-      run: dotnet pack --no-build -c Release -o nupkg /p:PackageVersion=${{ github.event.release.tag_name }}
+      run: dotnet pack AwesomeMarkup/AwesomeMarkup.csproj --no-build -c Release -o nupkg /p:PackageVersion=${{ github.event.release.tag_name }}
 
     - name: NuGet login (OIDC -> temp API key)
       uses: NuGet/login@v1
