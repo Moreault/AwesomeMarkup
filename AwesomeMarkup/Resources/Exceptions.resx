@@ -138,4 +138,37 @@
   <data name="ConflictingQuoteRules" xml:space="preserve">
 	  <value>Markup language specifications has conflicting quote rules</value>
   </data>
+  <data name="MismatchedBracketCount" xml:space="preserve">
+	  <value>There should be the same amount of opening and closing brackets in '{0}' but there are {1} and {2} respectively</value>
+  </data>
+  <data name="ValueCannotBeWhitespace" xml:space="preserve">
+	  <value>Value cannot be empty or whitespace</value>
+  </data>
+  <data name="MaxRecursionDepthExceeded" xml:space="preserve">
+	  <value>Maximum recursion depth exceeded while parsing nested markup</value>
+  </data>
+  <data name="UnmatchedOpeningBracket" xml:space="preserve">
+	  <value>No linked tag found at index {0}</value>
+  </data>
+  <data name="UnmatchedClosingTag" xml:space="preserve">
+	  <value>Found closing tags without matching opening tags</value>
+  </data>
+  <data name="DoubleQuotesDisallowed" xml:space="preserve">
+	  <value>Double quotes found in string but specifications disallow double quotes</value>
+  </data>
+  <data name="SingleQuotesDisallowed" xml:space="preserve">
+	  <value>Single quotes found in string but specifications disallow single quotes</value>
+  </data>
+  <data name="AttributeValueMustBeQuoted" xml:space="preserve">
+	  <value>Attribute value is expected to be between quotes but it was not the case</value>
+  </data>
+  <data name="UnescapedBracketInTag" xml:space="preserve">
+	  <value>Unescaped opening bracket found inside a tag at index {0}</value>
+  </data>
+  <data name="UnclosedTag" xml:space="preserve">
+	  <value>Opening bracket at index {0} has no matching closing bracket</value>
+  </data>
+  <data name="MismatchedClosingTag" xml:space="preserve">
+	  <value>Closing tag '{0}' does not match the currently open tag '{1}'</value>
+  </data>
 </root>

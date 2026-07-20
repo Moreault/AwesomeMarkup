@@ -1,11 +1,11 @@
-﻿namespace ToolBX.AwesomeMarkup.Parsing;
+namespace ToolBX.AwesomeMarkup.Parsing;
 
-public record MetaString
+public sealed record MetaString
 {
-    public IReadOnlyList<MarkupTag> Tags { get; init; } = Array.Empty<MarkupTag>();
+    public IReadOnlyList<MarkupTag> Tags { get; init; } = [];
     public string Text { get; init; } = string.Empty;
 
-    public virtual bool Equals(MetaString? other)
+    public bool Equals(MetaString? other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -14,14 +14,18 @@ public record MetaString
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Tags, Text);
+        var hash = new HashCode();
+        foreach (var tag in Tags)
+            hash.Add(tag);
+        hash.Add(Text);
+        return hash.ToHashCode();
     }
 
     public override string ToString()
     {
-        if (string.IsNullOrWhiteSpace(Text) && !Tags.Any()) return "(Empty)";
-        if (string.IsNullOrWhiteSpace(Text) && Tags.Any()) return $"Tags {string.Join(", ", Tags.Select(x => $"<{x}>"))}";
-        if (Tags.Any()) return $"'{Text}' with tags {string.Join(", ", Tags.Select(x => $"<{x}>"))}";
+        if (string.IsNullOrWhiteSpace(Text) && Tags.Count == 0) return "(Empty)";
+        if (string.IsNullOrWhiteSpace(Text) && Tags.Count > 0) return $"Tags {string.Join(", ", Tags.Select(x => $"<{x}>"))}";
+        if (Tags.Count > 0) return $"'{Text}' with tags {string.Join(", ", Tags.Select(x => $"<{x}>"))}";
         return $"'{Text}'";
     }
 }

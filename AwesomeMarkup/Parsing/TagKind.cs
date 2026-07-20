@@ -1,4 +1,4 @@
-﻿namespace ToolBX.AwesomeMarkup.Conversion;
+namespace ToolBX.AwesomeMarkup.Parsing;
 
 public enum TagKind
 {

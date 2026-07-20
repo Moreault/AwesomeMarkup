@@ -1,41 +1,46 @@
-﻿namespace ToolBX.AwesomeMarkup.Parsing;
+namespace ToolBX.AwesomeMarkup.Parsing;
 
-public record MarkupTag
+public sealed record MarkupTag
 {
     public required string Name
     {
-        get => _name;
+        get;
         init
         {
             if (string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException(nameof(value));
-            _name = value;
+            field = value;
         }
-    }
-    private readonly string _name = null!;
+    } = null!;
 
     public string Value { get; init; } = string.Empty;
-    public IReadOnlyList<MarkupParameter> Attributes { get; init; } = Array.Empty<MarkupParameter>();
+    public IReadOnlyList<MarkupParameter> Attributes { get; init; } = [];
 
     public required TagKind Kind { get; init; }
 
-    public virtual bool Equals(MarkupTag? other)
+    public bool Equals(MarkupTag? other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
-        return (string.IsNullOrWhiteSpace(Name) && string.IsNullOrWhiteSpace(other.Name) || string.Equals(Name, other.Name, StringComparison.InvariantCultureIgnoreCase)) &&
-               (string.IsNullOrWhiteSpace(Value) && string.IsNullOrWhiteSpace(other.Value) || string.Equals(Value, other.Value, StringComparison.InvariantCultureIgnoreCase)) &&
+        return string.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase) &&
+               (string.IsNullOrWhiteSpace(Value) && string.IsNullOrWhiteSpace(other.Value) || string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase)) &&
                Attributes.SequenceEqual(other.Attributes) &&
                Kind == other.Kind;
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Name, Value, Attributes, Kind);
+        var hash = new HashCode();
+        hash.Add(Name, StringComparer.OrdinalIgnoreCase);
+        hash.Add(string.IsNullOrWhiteSpace(Value) ? string.Empty : Value, StringComparer.OrdinalIgnoreCase);
+        foreach (var attribute in Attributes)
+            hash.Add(attribute);
+        hash.Add(Kind);
+        return hash.ToHashCode();
     }
 
     public override string ToString()
     {
         var namePart = string.IsNullOrWhiteSpace(Value) ? Name : $"{Name}={Value}";
-        return !Attributes.Any() ? namePart : $"{namePart} {string.Join(' ', Attributes)}";
+        return Attributes.Count == 0 ? namePart : $"{namePart} {string.Join(' ', Attributes)}";
     }
 }
