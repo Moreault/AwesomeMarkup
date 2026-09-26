@@ -324,6 +324,30 @@ public class MarkupParserTest
         }
 
         [TestMethod]
+        [DataRow("""<say line='"quoted"'>x</say>""", "\"quoted\"")]
+        [DataRow("""<say line="'tis">x</say>""", "'tis")]
+        [DataRow("""<say line="don't">x</say>""", "don't")]
+        [DataRow("""<say line=''>x</say>""", "")]
+        public void WhenAttributeValueStartsOrEndsWithTheOtherQuote_OnlyStripTheQuotesItIsWrittenIn(string markup, string expected)
+        {
+            //Act
+            var result = _parser.Parse(markup);
+
+            //Assert
+            result[0].Tags[0].Attributes[0].Value.Should().Be(expected);
+        }
+
+        [TestMethod]
+        public void WhenTagValueIsQuoted_OnlyStripTheQuotesItIsWrittenIn()
+        {
+            //Act
+            var result = _parser.Parse("""<icon='"odd"'/>""");
+
+            //Assert
+            result[0].Tags[0].Value.Should().Be("\"odd\"");
+        }
+
+        [TestMethod]
         public void WhenXmlLikeMarkupWithoutProcessingTags_ParseEntireTree()
         {
             //Arrange

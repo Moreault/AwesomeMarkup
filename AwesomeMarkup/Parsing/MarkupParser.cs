@@ -312,9 +312,18 @@ internal sealed class ParseOperation
         return new MarkupParameter
         {
             Name = word.Substring(0, index),
-            Value = rawValue.Trim('"', '\'')
+            Value = Unquote(rawValue)
         };
     }
+
+    /// <summary>
+    /// Takes off the one pair of quotes a value was written in, and nothing else. A value is free to start or end
+    /// with the other kind of quote — <c>'"quoted"'</c> is <c>"quoted"</c> and <c>"'tis"</c> is <c>'tis</c> —
+    /// so trimming every quote from both ends would lose part of what was written. A value that isn't wrapped in a
+    /// matching pair is kept exactly as written.
+    /// </summary>
+    private static string Unquote(string value) =>
+        value.Length >= 2 && (value[0] is '"' or '\'') && value[^1] == value[0] ? value[1..^1] : value;
 
     private static int CountOccurrences(string value, char c)
     {

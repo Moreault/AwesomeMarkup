@@ -59,7 +59,7 @@ var parsed = _markupParser.Parse("Some <color red=200 green=12 blue=54><underlin
 
 - Tags with a value (`<color=red>`), attributes (`<color red=200 green=12 blue=54>`) or both.
 - Arbitrarily nested tags. Each piece of text is returned with the flattened list of all the tags that enclose it.
-- Quoted attribute values, including values that contain the attribute separator (`<note type="some thing or another">`).
+- Quoted attribute values, including values that contain the attribute separator (`<note type="some thing or another">`). Only the pair of quotes a value is written in is removed, so a value may start or end with the other kind : `<say line='"quoted"'>` reads as `"quoted"` and `<say line="'tis">` as `'tis`.
 - Self-closing tags (`<br/>` or `<br />`).
 - XML-style processing tags (`<?xml version="1.0"?>`).
 - Optional bracket escaping (see below).
